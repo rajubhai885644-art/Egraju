@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>GREEN ACCESS | RAJU HOST ULTRA</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(ellipse at 20% 30%, #0a1f0a, #010a01);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* animated green matrix background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 100, 0.045) 0px, rgba(0, 255, 100, 0.045) 1px, transparent 1px, transparent 12px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 120, 0.04) 0px, rgba(0, 255, 120, 0.04) 1px, transparent 1px, transparent 12px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* floating green orbs */
+        .green-aura {
+            position: fixed;
+            width: 70vmax;
+            height: 70vmax;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 130, 0.25), transparent 70%);
+            top: -20%;
+            left: -25%;
+            filter: blur(75px);
+            z-index: 0;
+            animation: auraFloat 24s infinite alternate;
+        }
+        .green-aura2 {
+            bottom: -25%;
+            right: -20%;
+            top: auto;
+            left: auto;
+            background: radial-gradient(circle, rgba(50, 255, 130, 0.18), transparent 70%);
+            animation: auraFloat 30s infinite alternate-reverse;
+        }
+        @keyframes auraFloat {
+            0% { transform: translate(0,0) scale(1); opacity: 0.4; }
+            100% { transform: translate(6%, 8%) scale(1.2); opacity: 0.8; }
+        }
+
+        /* login card */
+        .login-card {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 440px;
+            background: rgba(8, 28, 12, 0.75);
+            backdrop-filter: blur(24px);
+            border-radius: 56px;
+            padding: 44px 36px;
+            border: 1px solid rgba(0, 255, 150, 0.65);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 140, 0.3) inset, 0 0 35px rgba(0, 255, 120, 0.3);
+            transition: 0.3s;
+            animation: cardGlow 3s infinite alternate;
+            text-align: center;
+        }
+        @keyframes cardGlow {
+            0% { box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 140, 0.3) inset, 0 0 15px rgba(0, 255, 100, 0.2); }
+            100% { box-shadow: 0 35px 60px rgba(0, 0, 0, 0.7), 0 0 0 1.5px rgba(0, 255, 180, 0.6) inset, 0 0 35px rgba(0, 255, 120, 0.5); }
+        }
+
+        /* brand icon */
+        .brand-icon {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(145deg, #00cc66, #33ffaa);
+            border-radius: 28px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: #021a02;
+            box-shadow: 0 0 25px #2eff9e;
+            position: relative;
+        }
+        .brand-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 28px;
+            border: 2px solid #5effaa;
+            animation: pulseRing 2.5s infinite;
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff, #aaffbb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0 0 6px;
+        }
+        .subtitle {
+            color: #b0f5c5;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+
+        /* input fields */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group i.input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c9e7a;
+            font-size: 18px;
+            transition: 0.2s;
+            z-index: 2;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px 16px 52px;
+            background: rgba(10, 35, 14, 0.7);
+            border: 1px solid rgba(0, 255, 140, 0.5);
+            border-radius: 44px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #e0ffe6;
+            outline: none;
+            transition: 0.25s;
+        }
+        .input-group input:focus {
+            border-color: #4effaa;
+            box-shadow: 0 0 18px rgba(0, 255, 150, 0.4);
+            background: rgba(10, 45, 16, 0.9);
+        }
+        .input-group input:focus + i.input-icon {
+            color: #4effaa;
+        }
+        .input-group input::placeholder {
+            color: #7aa07e;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7aa07e;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.2s;
+            z-index: 2;
+        }
+        .password-toggle:hover {
+            color: #aaffcc;
+        }
+
+        /* login button */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(105deg, #00cc66, #00ff99);
+            border: none;
+            border-radius: 44px;
+            font-weight: 800;
+            font-size: 16px;
+            color: #021a02;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-top: 12px;
+            box-shadow: 0 8px 24px rgba(0, 255, 100, 0.4);
+        }
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(0, 255, 130, 0.5);
+            filter: brightness(1.05);
+        }
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-link {
+            margin-top: 28px;
+            font-size: 13px;
+            color: #b0f5c5;
+        }
+        .footer-link a {
+            color: #5effaa;
+            text-decoration: none;
+            font-weight: 800;
+            border-bottom: 1px solid #5effaa;
+            transition: 0.2s;
+        }
+        .footer-link a:hover {
+            opacity: 0.8;
+        }
+
+        /* toast customization */
+        .green-toast-pop {
+            border-radius: 32px !important;
+            border-left: 5px solid #4effaa !important;
+            backdrop-filter: blur(16px);
+            font-weight: 600;
+        }
+
+        @media (max-width: 500px) {
+            .login-card { padding: 34px 24px; }
+            h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="green-aura"></div>
+<div class="green-aura green-aura2"></div>
+
+<div class="login-card animate__animated animate__fadeInUp">
+    <div class="brand-icon">
+        <i class="fas fa-shield-halved"></i>
+    </div>
+    <h2>GREEN ACCESS</h2>
+    <p class="subtitle">Secure gateway to bot infrastructure</p>
+
+    <form id="loginForm">
+        <div class="input-group">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="emailInput" placeholder="Email address" autocomplete="email" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-key input-icon"></i>
+            <input type="password" id="passwordInput" placeholder="Password" required>
+            <i class="fas fa-eye-slash password-toggle" id="togglePassBtn"></i>
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+            <span>SECURE SIGN IN</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </form>
+
+    <div class="footer-link">
+        No green identity yet? <a href="/signup">Register now →</a>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 100% WORKING LOGIN — GREEN PREMIUM THEME
+    // Complete frontend authentication with localStorage user database
+    // All interactions smooth, haptic feedback, green toast alerts
+    // ============================================================
+
+    // DOM elements
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const toggleBtn = document.getElementById('togglePassBtn');
+
+    // Password visibility toggle
+    toggleBtn.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+        this.classList.toggle('fa-eye');
+    });
+
+    // Haptic feedback helper
+    function triggerHaptic() {
+        if (window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(10);
+        }
+    }
+
+    // Green Toast Notification
+    function showGreenToast(iconType, titleMsg, isSuccess = true, duration = 2200) {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: iconType,
+            title: titleMsg,
+            showConfirmButton: false,
+            timer: duration,
+            background: '#0c2812',
+            color: '#e2ffe2',
+            customClass: { popup: 'green-toast-pop' }
+        });
+        if (!document.querySelector('#greenToastStyle')) {
+            const style = document.createElement('style');
+            style.id = 'greenToastStyle';
+            style.textContent = `.green-toast-pop { border-radius: 30px !important; border-left: 5px solid #4effaa !important; backdrop-filter: blur(16px); font-weight: 600; }`;
+            document.head.appendChild(style);
+        }
+    }
+
+    // Mock user database (synchronized with signup)
+    function getUsersFromStorage() {
+        const stored = localStorage.getItem('green_users_db');
+        if (stored) {
+            try {
+                return JSON.parse(stored);
+            } catch(e) { return []; }
+        }
+        // demo default users if empty
+        return [
+            {
+                id: 1,
+                fname: "RAJU",
+                lname: "ADMIN",
+                username: "raju_master",
+                email: "admin@greenhost.com",
+                password: btoa("admin123"),
+                role: "premium",
+                serverLimit: 10,
+                status: "active"
+            },
+            {
+                id: 2,
+                fname: "Demo",
+                lname: "User",
+                username: "demouser",
+                email: "demo@greenhost.com",
+                password: btoa("demo123"),
+                role: "free",
+                serverLimit: 2,
+                status: "active"
+            }
+        ];
+    }
+
+    // Validate email format
+    function isValidEmail(email) {
+        return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+    }
+
+    // Login handler
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        triggerHaptic();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Basic validation
+        if (!email || !password) {
+            showGreenToast('warning', '⚠️ Please fill all fields', false);
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showGreenToast('error', '📧 Invalid email format', false);
+            return;
+        }
+
+        // Simulate loading state
+        const originalBtnHtml = loginBtn.innerHTML;
+        loginBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> VERIFYING...';
+        loginBtn.disabled = true;
+
+        // Simulate network delay (premium feel)
+        await new Promise(resolve => setTimeout(resolve, 900));
+
+        // Authenticate against localStorage user database
+        const users = getUsersFromStorage();
+        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+        let authSuccess = false;
+        let userData = null;
+
+        if (user) {
+            // Compare password (stored as base64, decode for demo)
+            const decodedStoredPass = atob(user.password);
+            if (decodedStoredPass === password) {
+                // Check if user is banned/suspended
+                if (user.status === 'banned') {
+                    showGreenToast('error', '⛔ Account suspended. Contact admin.', false, 2500);
+                    resetButton(originalBtnHtml);
+                    return;
+                }
+                authSuccess = true;
+                userData = user;
+            }
+        }
+
+        if (authSuccess && userData) {
+            // Store session
+            const sessionUser = {
+                id: userData.id,
+                email: userData.email,
+                username: userData.username,
+                fullname: `${userData.fname} ${userData.lname}`,
+                role: userData.role,
+                serverLimit: userData.serverLimit
+            };
+            localStorage.setItem('green_current_user', JSON.stringify(sessionUser));
+            localStorage.setItem('green_auth_token', 'green_auth_' + Date.now());
+
+            showGreenToast('success', '✅ Identity verified — Redirecting...', true, 1500);
+
+            // Success modal before redirect
+            setTimeout(() => {
+                Swal.fire({
+                    title: '🟢 ACCESS GRANTED',
+                    html: `<span style="color:#b0ffcc;">Welcome back, ${userData.fname} ${userData.lname}<br>Redirecting to command center...</span>`,
+                    icon: 'success',
+                    background: '#0c2410',
+                    color: '#e0ffe6',
+                    confirmButtonColor: '#2eff9e',
+                    confirmButtonText: '<i class="fas fa-rocket"></i> LAUNCH',
+                    showConfirmButton: true,
+                    timer: 2500,
+                    timerProgressBar: true
+                }).then(() => {
+                    window.location.href = '/dashboard.html';
+                });
+            }, 200);
+        } else {
+            showGreenToast('error', '❌ Invalid email or password', false, 2200);
+            resetButton(originalBtnHtml);
+            // shake effect
+            const card = document.querySelector('.login-card');
+            card.style.transform = 'translateX(5px)';
+            setTimeout(() => card.style.transform = '', 100);
+            setTimeout(() => card.style.transform = 'translateX(-3px)', 150);
+            setTimeout(() => card.style.transform = '', 250);
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+
+        function resetButton(originalHtml) {
+            loginBtn.innerHTML = originalHtml;
+            loginBtn.disabled = false;
+        }
+    });
+
+    // Add input field haptics
+    const inputs = [emailInput, passwordInput];
+    inputs.forEach(inp => {
+        inp.addEventListener('focus', () => triggerHaptic());
+    });
+
+    // Check if already logged in (optional redirect)
+    const currentSession = localStorage.getItem('green_current_user');
+    if (currentSession && window.location.pathname !== '/dashboard.html') {
+        // optional: but we don't auto-redirect to avoid loops, just console info
+        console.log("Session active, ready to redirect after login");
+    }
+
+    console.log("%c🟢 GREEN LOGIN PORTAL | RAJU HOST ULTRA | SECURE ENTRY", "color: #5effaa; font-size: 14px; font-weight: bold; background: #0a1f0a; padding: 4px 12px; border-radius: 30px;");
+</script>
+</body>
+</html>
