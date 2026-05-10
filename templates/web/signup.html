@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>GREEN REGISTRY | RAJU HOST ULTRA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(ellipse at 20% 30%, #0a1f0a, #010a01);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* green matrix overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(0deg, rgba(0, 255, 100, 0.045) 0px, rgba(0, 255, 100, 0.045) 1px, transparent 1px, transparent 12px),
+        repeating-linear-gradient(90deg, rgba(0, 255, 120, 0.04) 0px, rgba(0, 255, 120, 0.04) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* floating green auras */
+    .green-aura {
+      position: fixed;
+      width: 70vmax;
+      height: 70vmax;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 130, 0.2), transparent 70%);
+      top: -20%;
+      left: -25%;
+      filter: blur(75px);
+      z-index: 0;
+      animation: auraFloat 24s infinite alternate;
+    }
+    .green-aura2 {
+      bottom: -25%;
+      right: -20%;
+      top: auto;
+      left: auto;
+      background: radial-gradient(circle, rgba(50, 255, 130, 0.15), transparent 70%);
+      animation: auraFloat 30s infinite alternate-reverse;
+    }
+    @keyframes auraFloat {
+      0% { transform: translate(0,0) scale(1); opacity: 0.4; }
+      100% { transform: translate(6%, 8%) scale(1.2); opacity: 0.8; }
+    }
+
+    /* signup card */
+    .signup-card {
+      position: relative;
+      z-index: 10;
+      background: rgba(8, 28, 12, 0.75);
+      backdrop-filter: blur(20px);
+      border-radius: 48px;
+      width: 100%;
+      max-width: 520px;
+      padding: 40px 36px;
+      border: 1px solid rgba(0, 255, 150, 0.65);
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 140, 0.3) inset, 0 0 35px rgba(0, 255, 120, 0.3);
+      transition: 0.3s;
+      animation: cardPulse 3s infinite alternate;
+    }
+    @keyframes cardPulse {
+      0% { box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 140, 0.3) inset, 0 0 15px rgba(0, 255, 100, 0.2); }
+      100% { box-shadow: 0 35px 60px rgba(0, 0, 0, 0.7), 0 0 0 1.5px rgba(0, 255, 180, 0.6) inset, 0 0 35px rgba(0, 255, 120, 0.5); }
+    }
+
+    .logo-area {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .logo-icon {
+      background: linear-gradient(145deg, #00cc66, #33ffaa);
+      width: 65px;
+      height: 65px;
+      border-radius: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px #2eff9e;
+    }
+    .logo-icon i {
+      font-size: 32px;
+      color: #021a02;
+    }
+    h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff, #aaffbb);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 0;
+    }
+    .subtitle {
+      color: #b0f5c5;
+      font-size: 14px;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* form styles */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #b0f5c5;
+      margin-bottom: 8px;
+    }
+    .input-icon {
+      position: relative;
+    }
+    .input-icon i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c9e7a;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      background: rgba(10, 35, 14, 0.7);
+      border: 1px solid rgba(0, 255, 140, 0.5);
+      border-radius: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #e0ffe6;
+      transition: 0.25s;
+      outline: none;
+    }
+    input:focus {
+      border-color: #4effaa;
+      box-shadow: 0 0 18px rgba(0, 255, 150, 0.4);
+      background: rgba(10, 45, 16, 0.9);
+    }
+    input::placeholder {
+      color: #7aa07e;
+    }
+
+    /* file upload */
+    .file-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .file-btn {
+      background: rgba(10, 35, 14, 0.7);
+      border: 1px dashed #4effaa;
+      border-radius: 28px;
+      padding: 14px 16px;
+      text-align: center;
+      color: #ccffdd;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .file-btn:hover {
+      background: #1e4a2a;
+      border-color: #aaffcc;
+    }
+
+    /* button */
+    .btn-register {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(105deg, #00cc66, #00ff99);
+      border: none;
+      border-radius: 44px;
+      font-weight: 800;
+      font-size: 16px;
+      color: #021a02;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: 0.25s;
+      margin-top: 10px;
+      box-shadow: 0 8px 24px rgba(0, 255, 100, 0.4);
+    }
+    .btn-register:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(0, 255, 130, 0.5);
+      filter: brightness(1.05);
+    }
+    .btn-register:active {
+      transform: scale(0.97);
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 13px;
+      color: #b0f5c5;
+    }
+    .footer-text a {
+      color: #5effaa;
+      text-decoration: none;
+      font-weight: 800;
+      border-bottom: 1px solid #5effaa;
+    }
+
+    /* toast customization */
+    .green-toast {
+      background: rgba(8, 30, 12, 0.95) !important;
+      backdrop-filter: blur(16px) !important;
+      border: 1px solid #32ff8c !important;
+      border-radius: 36px !important;
+      font-weight: 700 !important;
+    }
+
+    @media (max-width: 540px) {
+      .signup-card { padding: 28px 22px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="green-aura"></div>
+<div class="green-aura green-aura2"></div>
+
+<div class="signup-card animate__animated animate__fadeInUp">
+  <div class="logo-area">
+    <div class="logo-icon">
+      <i class="fas fa-crown"></i>
+    </div>
+    <h2>GREEN REGISTRY</h2>
+    <div class="subtitle">Join the elite infra — Python bot ecosystem</div>
+  </div>
+
+  <form id="signupForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> FIRST NAME</label>
+        <div class="input-icon">
+          <i class="fas fa-user-edit"></i>
+          <input type="text" name="fname" placeholder="John" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> LAST NAME</label>
+        <div class="input-icon">
+          <i class="fas fa-user-tag"></i>
+          <input type="text" name="lname" placeholder="Doe" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-at"></i> USERNAME</label>
+      <div class="input-icon">
+        <i class="fas fa-code-branch"></i>
+        <input type="text" name="username" placeholder="green_master" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-envelope"></i> EMAIL ADDRESS</label>
+      <div class="input-icon">
+        <i class="fas fa-envelope-open-text"></i>
+        <input type="email" name="email" placeholder="bot@greenhost.com" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label><i class="fas fa-lock"></i> PASSWORD</label>
+        <div class="input-icon">
+          <i class="fas fa-key"></i>
+          <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-check-circle"></i> CONFIRM</label>
+        <div class="input-icon">
+          <i class="fas fa-shield-alt"></i>
+          <input type="password" name="confirm_password" placeholder="••••••••" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-camera"></i> PROFILE IMAGE (OPTIONAL)</label>
+      <div class="file-wrapper">
+        <input type="file" name="pfp" id="profilePic" accept="image/*" style="display: none;">
+        <div class="file-btn" onclick="document.getElementById('profilePic').click()" id="fileLabel">
+          <i class="fas fa-cloud-upload-alt"></i> SELECT AVATAR
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-register" id="registerBtn">
+      <i class="fas fa-fingerprint"></i> REGISTER & DEPLOY
+    </button>
+  </form>
+
+  <div class="footer-text">
+    Already have green access? <a href="/login">Enter Portal →</a>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // 100% WORKING SIGNUP — GREEN PREMIUM THEME
+  // Complete frontend validation, mock registration with localStorage
+  // All interactions smooth, green toast alerts, haptic ready
+  // ============================================================
+
+  const form = document.getElementById('signupForm');
+  const registerBtn = document.getElementById('registerBtn');
+  let selectedFileName = null;
+
+  // update file label
+  const fileInput = document.getElementById('profilePic');
+  const fileLabel = document.getElementById('fileLabel');
+  
+  fileInput.addEventListener('change', function(e) {
+    if (e.target.files.length > 0) {
+      const fileName = e.target.files[0].name;
+      fileLabel.innerHTML = `<i class="fas fa-check-circle"></i> ${fileName.substring(0, 25)}`;
+      fileLabel.style.borderColor = '#6effaa';
+      fileLabel.style.background = '#1a4a2a';
+      selectedFileName = fileName;
+    } else {
+      fileLabel.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> SELECT AVATAR`;
+      fileLabel.style.borderColor = '#4effaa';
+      fileLabel.style.background = 'rgba(10, 35, 14, 0.7)';
+    }
+  });
+
+  // Helper: green toast notification
+  function showGreenToast(iconType, titleMsg, isSuccess = true, duration = 2200) {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: iconType,
+      title: titleMsg,
+      showConfirmButton: false,
+      timer: duration,
+      background: '#0c2812',
+      color: '#e2ffe2',
+      customClass: { popup: 'green-toast-pop' }
+    });
+    if (!document.querySelector('#greenToastStyle')) {
+      const style = document.createElement('style');
+      style.id = 'greenToastStyle';
+      style.textContent = `.green-toast-pop { border-radius: 30px !important; border-left: 5px solid #4effaa !important; backdrop-filter: blur(16px); font-weight: 600; }`;
+      document.head.appendChild(style);
+    }
+  }
+
+  // Simulate haptic feedback (mobile)
+  function triggerHaptic() {
+    if (window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(10);
+    }
+  }
+
+  // Validate email format
+  function isValidEmail(email) {
+    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+  }
+
+  // Main registration handler — 100% functional with localStorage simulation
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    triggerHaptic();
+
+    // Get form values
+    const fname = form.querySelector('[name="fname"]').value.trim();
+    const lname = form.querySelector('[name="lname"]').value.trim();
+    const username = form.querySelector('[name="username"]').value.trim();
+    const email = form.querySelector('[name="email"]').value.trim();
+    const password = form.querySelector('[name="password"]').value;
+    const confirmPass = form.querySelector('[name="confirm_password"]').value;
+    const pfpFile = fileInput.files[0];
+
+    // Validation
+    if (!fname || !lname || !username || !email || !password || !confirmPass) {
+      showGreenToast('warning', '⚠️ All fields are required', false);
+      return;
+    }
+
+    if (password.length < 6) {
+      showGreenToast('error', '❌ Password must be at least 6 characters', false);
+      return;
+    }
+
+    if (password !== confirmPass) {
+      showGreenToast('error', '🔐 Passwords do not match', false);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showGreenToast('error', '📧 Invalid email address', false);
+      return;
+    }
+
+    // Check if username or email already exists in mock database
+    const existingUsers = JSON.parse(localStorage.getItem('green_users_db') || '[]');
+    const userExists = existingUsers.some(u => u.username === username || u.email === email);
+    if (userExists) {
+      showGreenToast('error', '⚠️ Username or email already registered', false);
+      return;
+    }
+
+    // Simulate loading state
+    const originalBtnText = registerBtn.innerHTML;
+    registerBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> INITIALIZING...';
+    registerBtn.disabled = true;
+
+    // Simulate network delay (premium feel)
+    await new Promise(resolve => setTimeout(resolve, 1200));
+
+    // Create user object
+    let profilePictureBase64 = null;
+    if (pfpFile) {
+      profilePictureBase64 = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(pfpFile);
+      });
+    }
+
+    const newUser = {
+      id: Date.now(),
+      fname: fname,
+      lname: lname,
+      username: username,
+      email: email,
+      password: btoa(password), // simple encoding (demo only)
+      profilePicture: profilePictureBase64 || null,
+      role: 'free',
+      serverLimit: 2,
+      createdAt: new Date().toISOString(),
+      servers: []
+    };
+
+    // Store to localStorage
+    existingUsers.push(newUser);
+    localStorage.setItem('green_users_db', JSON.stringify(existingUsers));
+    
+    // Also store current session
+    localStorage.setItem('green_current_user', JSON.stringify({ id: newUser.id, username, email, role: 'free' }));
+
+    // Success toast
+    showGreenToast('success', '✅ ACCOUNT ACTIVATED — Welcome to Green Host', true, 1800);
+    
+    // Reset button
+    registerBtn.innerHTML = originalBtnText;
+    registerBtn.disabled = false;
+
+    // Redirect after success
+    setTimeout(() => {
+      Swal.fire({
+        title: '🌿 WELCOME ABOARD',
+        html: `<span style="color:#b0ffcc;">Your green infrastructure is ready.<br>Redirecting to dashboard...</span>`,
+        icon: 'success',
+        background: '#0c2410',
+        color: '#e0ffe6',
+        confirmButtonColor: '#2eff9e',
+        confirmButtonText: '<i class="fas fa-rocket"></i> LAUNCH NOW',
+        showConfirmButton: true,
+        timer: 3000,
+        timerProgressBar: true
+      }).then(() => {
+        window.location.href = '/dashboard.html';
+      });
+    }, 600);
+  });
+
+  // Add some extra shine: input focus effect
+  const allInputs = document.querySelectorAll('input');
+  allInputs.forEach(inp => {
+    inp.addEventListener('focus', () => triggerHaptic());
+  });
+
+  // Optional: display existing users count in console (premium debug)
+  console.log("%c🟢 GREEN REGISTRY | RAJU HOST ULTRA | SIGNUP MODULE ACTIVE", "color: #5effaa; font-size: 15px; font-weight: bold; background: #0a1f0a; padding: 4px; border-radius: 12px;");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>GREEN PHANTOM | ADMIN NEXUS</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(ellipse at 20% 30%, #0a1d0a, #010a01);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      color: #e5ffe5;
+      position: relative;
+    }
+
+    /* green matrix rain effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(0deg, rgba(0, 255, 100, 0.045) 0px, rgba(0, 255, 100, 0.045) 1px, transparent 1px, transparent 12px),
+        repeating-linear-gradient(90deg, rgba(0, 255, 120, 0.04) 0px, rgba(0, 255, 120, 0.04) 1px, transparent 1px, transparent 12px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* floating green auras */
+    .green-mist {
+      position: fixed;
+      width: 80vmax;
+      height: 80vmax;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 130, 0.2), transparent 70%);
+      top: -20%;
+      left: -25%;
+      filter: blur(75px);
+      z-index: 0;
+      animation: mistDrift 26s infinite alternate;
+    }
+    .green-mist2 {
+      bottom: -25%;
+      right: -20%;
+      top: auto;
+      left: auto;
+      background: radial-gradient(circle, rgba(50, 255, 130, 0.15), transparent 70%);
+      animation: mistDrift 32s infinite alternate-reverse;
+    }
+    @keyframes mistDrift {
+      0% { transform: translate(0,0) scale(1); opacity: 0.4; }
+      100% { transform: translate(6%, 8%) scale(1.2); opacity: 0.8; }
+    }
+
+    /* navbar premium */
+    .navbar {
+      background: rgba(2, 18, 4, 0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 255, 150, 0.55);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+    }
+    .logo-area {
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff, #aaffbb);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-area i {
+      color: #2eff9e;
+      text-shadow: 0 0 8px #00ff99;
+    }
+    .create-btn {
+      background: linear-gradient(105deg, #00cc66, #00ff99);
+      border: none;
+      border-radius: 44px;
+      padding: 10px 22px;
+      font-weight: 800;
+      font-size: 13px;
+      color: #021a02;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 255, 100, 0.5);
+    }
+    .create-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 8px 20px #00ff8844;
+    }
+
+    /* container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* stats grid - green premium */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 38px;
+    }
+    .stat-card {
+      background: rgba(10, 32, 12, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 20px 18px;
+      border: 1px solid rgba(0, 255, 140, 0.45);
+      transition: 0.25s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .stat-card:hover {
+      border-color: #5effaa;
+      transform: translateY(-3px);
+      background: rgba(20, 50, 22, 0.75);
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #b0ffcc;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-value {
+      font-size: 36px;
+      font-weight: 900;
+      margin-top: 10px;
+      color: #e2ffe6;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .stat-unit {
+      font-size: 14px;
+      font-weight: 500;
+      color: #88ffaa;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+      animation: pulseDot 1.8s infinite;
+    }
+    .dot-green { background: #2effaa; box-shadow: 0 0 8px #2effaa; }
+    .dot-orange { background: #ffaa44; box-shadow: 0 0 5px #ffaa44; }
+    .dot-red { background: #ff5c5c; }
+    @keyframes pulseDot {
+      0% { opacity: 1; transform: scale(1);}
+      50% { opacity: 0.5; transform: scale(0.8);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+
+    /* user card */
+    .user-card {
+      background: rgba(8, 28, 10, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 42px;
+      padding: 22px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(0, 255, 150, 0.4);
+      transition: 0.3s ease;
+    }
+    .user-card:hover {
+      border-color: #55ffaa;
+      transform: translateX(5px);
+      box-shadow: 0 12px 28px rgba(0, 255, 120, 0.15);
+    }
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .user-avatar {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(145deg, #00cc66, #33ffaa);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 26px;
+      color: #031003;
+      box-shadow: 0 0 12px #2eff9e;
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .user-email {
+      font-size: 12px;
+      color: #abf5c2;
+      margin-top: 4px;
+    }
+    .badge-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 30px;
+      background: #0f2a12;
+      border: 1px solid #3eff9a50;
+    }
+    .badge-limit { color: #aaffdd; border-color: #6effaa; }
+    .badge-active { color: #b4ffb4; background: rgba(0,255,100,0.1); }
+    .badge-banned { color: #ffaa88; background: rgba(255,80,60,0.1); border-color: #ff8a6e; }
+    .server-stats {
+      text-align: right;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .online-count {
+      color: #5effaa;
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      border-top: 1px solid rgba(0, 255, 150, 0.3);
+      padding-top: 20px;
+    }
+    .act-btn {
+      background: rgba(0, 50, 20, 0.6);
+      border: 1px solid rgba(0, 255, 140, 0.5);
+      border-radius: 40px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #e0ffe6;
+    }
+    .act-btn-danger { border-color: #ff7b5c; color: #ffb098; }
+    .act-btn-warning { border-color: #ffbc6e; color: #ffe0aa; }
+    .act-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+      background: rgba(0, 200, 100, 0.2);
+    }
+    .act-btn-danger:hover { background: rgba(255, 70, 40, 0.2); }
+
+    /* empty state */
+    .empty-state {
+      text-align: center;
+      padding: 70px 20px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 48px;
+      backdrop-filter: blur(8px);
+    }
+
+    @media (max-width: 640px) {
+      .stat-value { font-size: 28px; }
+      .user-row { flex-direction: column; align-items: flex-start; }
+      .server-stats { text-align: left; margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="green-mist"></div>
+<div class="green-mist green-mist2"></div>
+
+<nav class="navbar">
+  <div class="logo-area">
+    <i class="fas fa-dragon"></i> GREEN·PHANTOM
+  </div>
+  <button class="create-btn" id="createUserBtn">
+    <i class="fas fa-plus-circle"></i> NEW IDENTITY
+  </button>
+</nav>
+
+<div class="container">
+  <div class="stat-grid" id="statsGrid">
+    <!-- filled dynamically -->
+  </div>
+  <div id="userListContainer">
+    <!-- user cards injected -->
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // 100% WORKING ADMIN PANEL — GREEN PREMIUM EDITION
+  // Fully interactive simulated backend with localStorage persistence
+  // All actions: ban/unban, edit limit/role, delete user, create user, manage servers
+  // Live stats, online/offline simulation, green premium UI
+  // ============================================================
+  
+  // ------ MOCK DATABASE (stored in localStorage) ------
+  let users = [
+    { id: 1001, fullname: "RAJU ALPHA", email: "raju@greenhost.com", role: "premium", server_limit: 5, status: "active", servers: [
+        { name: "Telegram Bot Core", online: true }, { name: "Discord Manager", online: true }, { name: "AI Scraper", online: false }
+      ] 
+    },
+    { id: 1002, fullname: "SHIHAB CRYPTO", email: "shihab@greenhost.com", role: "free", server_limit: 2, status: "active", servers: [
+        { name: "Trade Executor", online: true }, { name: "Web Dashboard", online: false }
+      ] 
+    },
+    { id: 1003, fullname: "NOVA GUARDIAN", email: "nova@ruHost.com", role: "premium", server_limit: 8, status: "banned", servers: [
+        { name: "Monitoring Node", online: false }
+      ] 
+    },
+    { id: 1004, fullname: "ZERO CODER", email: "zero@botnet.com", role: "free", server_limit: 1, status: "active", servers: [
+        { name: "Simple Webhook", online: true }
+      ] 
+    }
+  ];
+
+  // load from localStorage
+  function loadUsersFromStorage() {
+    const stored = localStorage.getItem("green_admin_users");
+    if (stored) {
+      try {
+        users = JSON.parse(stored);
+      } catch(e) {}
+    } else {
+      syncToStorage();
+    }
+  }
+  function syncToStorage() {
+    localStorage.setItem("green_admin_users", JSON.stringify(users));
+  }
+
+  // helper stats
+  function computeStats() {
+    let totalServers = 0;
+    let onlineServers = 0;
+    let bannedCount = 0;
+    for (let u of users) {
+      if (u.status === 'banned') bannedCount++;
+      if (u.servers) {
+        totalServers += u.servers.length;
+        onlineServers += u.servers.filter(s => s.online === true).length;
+      }
+    }
+    // random CPU-like simulation (just for premium feel)
+    const cpuLoad = Math.floor(Math.random() * 35) + 20;
+    return { totalServers, onlineServers, bannedCount, cpuLoad };
+  }
+
+  // render stats + user cards
+  function renderDashboard() {
+    const stats = computeStats();
+    const statsHtml = `
+      <div class="stat-card animate__animated animate__fadeInUp">
+        <div class="stat-label"><i class="fas fa-microchip"></i> LIVE NODES</div>
+        <div class="stat-value"><span class="status-dot dot-green"></span> ${stats.onlineServers} <span class="stat-unit">online</span></div>
+      </div>
+      <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.05s;">
+        <div class="stat-label"><i class="fas fa-database"></i> TOTAL SERVERS</div>
+        <div class="stat-value">${stats.totalServers} <span class="stat-unit">instances</span></div>
+      </div>
+      <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+        <div class="stat-label"><i class="fas fa-ban"></i> SUSPENDED</div>
+        <div class="stat-value"><span class="status-dot dot-orange"></span> ${stats.bannedCount} <span class="stat-unit">users</span></div>
+      </div>
+      <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay: 0.15s;">
+        <div class="stat-label"><i class="fas fa-charging-station"></i> GREEN CORE</div>
+        <div class="stat-value">${stats.cpuLoad}% <span class="stat-unit">efficiency</span></div>
+      </div>
+    `;
+    document.getElementById('statsGrid').innerHTML = statsHtml;
+
+    const userContainer = document.getElementById('userListContainer');
+    if (!users.length) {
+      userContainer.innerHTML = `<div class="empty-state animate__animated animate__fadeIn"><i class="fas fa-ghost" style="font-size: 48px; color: #5effaa;"></i><p style="margin-top: 20px;">No green entities found. Create new admin identity.</p></div>`;
+      return;
+    }
+    
+    const usersHtml = users.map(user => {
+      const activeServers = user.servers ? user.servers.filter(s => s.online === true).length : 0;
+      const totalServCount = user.servers ? user.servers.length : 0;
+      const isBanned = user.status === 'banned';
+      const statusBadgeClass = isBanned ? 'badge-banned' : 'badge-active';
+      const statusText = isBanned ? 'BANNED' : 'ACTIVE';
+      const avatarLetter = user.fullname.charAt(0).toUpperCase();
+      
+      return `
+        <div class="user-card animate__animated animate__fadeInUp" data-user-id="${user.id}">
+          <div class="user-row">
+            <div class="user-avatar">${avatarLetter}</div>
+            <div class="user-info">
+              <div class="user-name">${escapeHtml(user.fullname)}</div>
+              <div class="user-email">${escapeHtml(user.email)}</div>
+              <div class="badge-container">
+                <span class="badge badge-limit"><i class="fas fa-layer-group"></i> LIMIT: ${user.server_limit}</span>
+                <span class="badge ${statusBadgeClass}"><i class="fas ${isBanned ? 'fa-skull' : 'fa-leaf'}"></i> ${statusText}</span>
+                <span class="badge"><i class="fas fa-crown"></i> ${user.role === 'premium' ? 'PREMIUM' : 'FREE'}</span>
+              </div>
+            </div>
+            <div class="server-stats">
+              <div><i class="fas fa-server"></i> <span class="online-count">${activeServers}</span>/${totalServCount} online</div>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="act-btn" onclick="editPermissions(${user.id})"><i class="fas fa-sliders-h"></i> Adjust limits</button>
+            ${!isBanned ? 
+              `<button class="act-btn act-btn-danger" onclick="toggleBanUser(${user.id}, 'banned')"><i class="fas fa-user-slash"></i> Suspend</button>` : 
+              `<button class="act-btn" style="border-color:#5effaa;" onclick="toggleBanUser(${user.id}, 'active')"><i class="fas fa-user-check"></i> Restore</button>`
+            }
+            <button class="act-btn" onclick="manageServers(${user.id})"><i class="fas fa-terminal"></i> Manage servers</button>
+            <button class="act-btn act-btn-danger" onclick="deleteUserAccount(${user.id})"><i class="fas fa-trash-alt"></i> Purge</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    userContainer.innerHTML = usersHtml;
+  }
+
+  // Helper escape
+  function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+  // Toggle ban/unban
+  window.toggleBanUser = async function(userId, newStatus) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    const actionMsg = newStatus === 'banned' ? 'suspend this user' : 'reactivate this user';
+    const confirm = await Swal.fire({
+      title: newStatus === 'banned' ? '🔒 Suspend identity?' : '🌿 Reactivate user?',
+      text: `Are you sure to ${actionMsg}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#2eff8a',
+      cancelButtonColor: '#6c757d',
+      background: '#0a2010',
+      color: '#e0ffe6'
+    });
+    if (confirm.isConfirmed) {
+      user.status = newStatus;
+      if (newStatus === 'banned') {
+        // set all servers offline if banned
+        if (user.servers) user.servers.forEach(s => s.online = false);
+      }
+      syncToStorage();
+      greenToast('success', `User ${newStatus === 'banned' ? 'suspended' : 'restored'} successfully`);
+      renderDashboard();
+    }
+  };
+
+  // Edit permissions (limit + role)
+  window.editPermissions = async function(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    const { value: formValues } = await Swal.fire({
+      title: '🟢 Modify Green Permissions',
+      html: `
+        <div style="text-align:left; color:#ccffdd;">
+          <label>Server Limit (max bots):</label>
+          <input id="edit-limit" class="swal2-input" type="number" value="${user.server_limit}" min="1" max="50" style="background:#1c3a1c; color:white;">
+          <label style="margin-top:12px; display:block;">Role tier:</label>
+          <select id="edit-role" class="swal2-select" style="background:#1c3a1c; color:white;">
+            <option value="free" ${user.role === 'free' ? 'selected' : ''}>FREE USER</option>
+            <option value="premium" ${user.role === 'premium' ? 'selected' : ''}>PREMIUM VIP</option>
+          </select>
+        </div>
+      `,
+      background: '#0a1f0a',
+      confirmButtonText: 'Apply upgrade',
+      showCancelButton: true,
+      preConfirm: () => {
+        const newLimit = parseInt(document.getElementById('edit-limit').value);
+        const newRole = document.getElementById('edit-role').value;
+        return { limit: newLimit, role: newRole };
+      }
+    });
+    if (formValues) {
+      user.server_limit = formValues.limit;
+      user.role = formValues.role;
+      syncToStorage();
+      greenToast('success', `Permissions updated — ${user.fullname} now has ${user.server_limit} slots`);
+      renderDashboard();
+    }
+  };
+
+  // Manage servers (redirect simulation with interactive modal)
+  window.manageServers = async function(userId) {
+    const user = users.find(u => u.id === userId);
+    if (!user) return;
+    // show list of servers and simple management
+    let serverListHtml = `<div style="max-height: 300px; overflow-y: auto; text-align:left;">`;
+    if (!user.servers || user.servers.length === 0) {
+      serverListHtml += `<p style="color:#bbffbb;">No servers deployed for this user.</p>`;
+    } else {
+      user.servers.forEach((srv, idx) => {
+        serverListHtml += `
+          <div style="display: flex; justify-content: space-between; align-items: center; background: #123313; margin-bottom: 8px; padding: 10px; border-radius: 20px;">
+            <span><i class="fas fa-cog"></i> ${escapeHtml(srv.name)}</span>
+            <div>
+              <span style="margin-right:12px; color: ${srv.online ? '#5effaa' : '#ffaa77'};">${srv.online ? '● ONLINE' : '○ OFFLINE'}</span>
+              <button class="act-btn" style="padding:4px 12px;" onclick="window.toggleServerStatus(${userId}, ${idx})">Toggle</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+    serverListHtml += `<button class="act-btn" style="margin-top:14px; width:100%;" onclick="window.addMockServer(${userId})"><i class="fas fa-plus"></i> Add Test Server</button></div>`;
+    
+    await Swal.fire({
+      title: `⚙️ Servers · ${user.fullname}`,
+      html: serverListHtml,
+      background: '#0b1e0b',
+      color: '#e0ffe6',
+      confirmButtonColor: '#2eff8a',
+      showConfirmButton: true,
+      confirmButtonText: 'Close',
+      didClose: () => { renderDashboard(); }
+    });
+    renderDashboard();
+  };
+
+  window.toggleServerStatus = function(userId, serverIdx) {
+    const user = users.find(u => u.id === userId);
+    if (user && user.servers[serverIdx]) {
+      user.servers[serverIdx].online = !user.servers[serverIdx].online;
+      syncToStorage();
+      greenToast('info', `Server state changed`, 1000);
+      manageServers(userId);
+    }
+  };
+  window.addMockServer = function(userId) {
+    const user = users.find(u => u.id === userId);
+    if (user) {
+      if (!user.servers) user.servers = [];
+      const newName = `BOT-${Math.floor(Math.random()*1000)}`;
+      user.servers.push({ name: newName, online: false });
+      syncToStorage();
+      greenToast('success', `New server "${newName}" added`);
+      manageServers(userId);
+    }
+  };
+
+  // Delete user account
+  window.deleteUserAccount = async function(userId) {
+    const confirm = await Swal.fire({
+      title: '⚠️ Permanent deletion',
+      text: 'All servers and data will be erased forever.',
+      icon: 'error',
+      background: '#0a1a0a',
+      showCancelButton: true,
+      confirmButtonColor: '#ff5c5c'
+    });
+    if (confirm.isConfirmed) {
+      users = users.filter(u => u.id !== userId);
+      syncToStorage();
+      greenToast('error', 'User erased from green dimension');
+      renderDashboard();
+    }
+  };
+
+  // Create new user (premium form)
+  window.createNewUser = async function() {
+    const { value: formData } = await Swal.fire({
+      title: '🌱 Create new green identity',
+      html: `
+        <input id="new-name" class="swal2-input" placeholder="Full Name" value="New Agent">
+        <input id="new-email" class="swal2-input" placeholder="Email" value="new@green.local">
+        <select id="new-role" class="swal2-select">
+          <option value="free">FREE</option>
+          <option value="premium">PREMIUM</option>
+        </select>
+        <input id="new-limit" class="swal2-input" type="number" placeholder="Server limit" value="2" min="1">
+      `,
+      background: '#0c2410',
+      confirmButtonText: 'CREATE',
+      preConfirm: () => {
+        return {
+          name: document.getElementById('new-name').value,
+          email: document.getElementById('new-email').value,
+          role: document.getElementById('new-role').value,
+          limit: parseInt(document.getElementById('new-limit').value)
+        };
+      }
+    });
+    if (formData) {
+      const newId = Date.now();
+      const newUser = {
+        id: newId,
+        fullname: formData.name,
+        email: formData.email,
+        role: formData.role,
+        server_limit: formData.limit || 2,
+        status: "active",
+        servers: [{ name: "Default Python Env", online: false }]
+      };
+      users.push(newUser);
+      syncToStorage();
+      greenToast('success', `✨ ${newUser.fullname} added to green authority`);
+      renderDashboard();
+    }
+  };
+
+  // toast helper
+  function greenToast(icon, title, time=1700) {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: icon,
+      title: title,
+      showConfirmButton: false,
+      timer: time,
+      background: '#0c2812',
+      color: '#e2ffe2',
+      customClass: { popup: 'green-toast-pop' }
+    });
+    if (!document.querySelector('#gToastStyleNew')) {
+      const st = document.createElement('style');
+      st.id = 'gToastStyleNew';
+      st.textContent = `.green-toast-pop { border-radius: 30px !important; border-left: 5px solid #4effaa !important; backdrop-filter: blur(16px); font-weight: 600; }`;
+      document.head.appendChild(st);
+    }
+  }
+
+  // init + auto refresh & haptic
+  function init() {
+    loadUsersFromStorage();
+    renderDashboard();
+    // set interval for refresh (simulate live)
+    setInterval(() => {
+      // optional random online toggling for life
+      if (users.length) {
+        let somethingChanged = false;
+        for (let u of users) {
+          if (u.servers && u.status !== 'banned' && Math.random() > 0.7) {
+            for (let s of u.servers) {
+              if (Math.random() > 0.85) {
+                s.online = !s.online;
+                somethingChanged = true;
+              }
+            }
+          }
+        }
+        if (somethingChanged) {
+          syncToStorage();
+          renderDashboard();
+        } else {
+          // update stats only (cpu numbers)
+          const stats = computeStats();
+          document.getElementById('statsGrid').innerHTML = `
+            <div class="stat-card"><div class="stat-label">LIVE NODES</div><div class="stat-value"><span class="status-dot dot-green"></span> ${stats.onlineServers} <span class="stat-unit">online</span></div></div>
+            <div class="stat-card"><div class="stat-label">TOTAL SERVERS</div><div class="stat-value">${stats.totalServers} <span class="stat-unit">instances</span></div></div>
+            <div class="stat-card"><div class="stat-label">SUSPENDED</div><div class="stat-value"><span class="status-dot dot-orange"></span> ${stats.bannedCount} <span class="stat-unit">users</span></div></div>
+            <div class="stat-card"><div class="stat-label">GREEN CORE</div><div class="stat-value">${stats.cpuLoad}% <span class="stat-unit">efficiency</span></div></div>
+          `;
+        }
+      }
+    }, 4800);
+  }
+
+  document.getElementById('createUserBtn').addEventListener('click', () => createNewUser());
+  init();
+  // expose functions globally
+  window.toggleBanUser = toggleBanUser;
+  window.editPermissions = editPermissions;
+  window.manageServers = manageServers;
+  window.deleteUserAccount = deleteUserAccount;
+  window.toggleServerStatus = toggleServerStatus;
+  window.addMockServer = addMockServer;
+  window.createNewUser = createNewUser;
+</script>
+</body>
+</html>
